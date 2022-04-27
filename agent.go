@@ -12,7 +12,9 @@ import (
 	"io"
 	"net"
 	"os"
+	"sync"
 
+	"github.com/caarlos0/sync/erronce"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/crypto/ssh/agent"
 )
@@ -29,58 +31,75 @@ type Agent struct {
 	signers []ssh.Signer
 	close   func() error
 	socket  string
+	mu      sync.Mutex
+	once    erronce.ErrOnce
 }
 
 var _ agent.Agent = &Agent{}
 
 // Start the agent in a random socket.
 func (a *Agent) Start() error {
-	f, err := os.CreateTemp(os.TempDir(), "agent.*")
-	if err != nil {
-		return fmt.Errorf("failed to create socket: %w", err)
-	}
-	if err := f.Close(); err != nil {
-		return fmt.Errorf("failed to create socket: %w", err)
-	}
-	if err := os.Remove(f.Name()); err != nil {
-		return fmt.Errorf("failed to create socket: %w", err)
-	}
-
-	sock := f.Name()
-	l, err := net.Listen("unix", sock)
-	if err != nil {
-		return fmt.Errorf("failed to start listening: %w", err)
-	}
-
-	a.socket = sock
-	a.close = l.Close
-
-	for {
-		c, err := l.Accept()
+	return a.once.Do(func() error {
+		f, err := os.CreateTemp(os.TempDir(), "agent.*")
 		if err != nil {
-			if errors.Is(err, net.ErrClosed) {
-				return nil
+			return fmt.Errorf("failed to create socket: %w", err)
+		}
+		if err := f.Close(); err != nil {
+			return fmt.Errorf("failed to create socket: %w", err)
+		}
+		if err := os.Remove(f.Name()); err != nil {
+			return fmt.Errorf("failed to create socket: %w", err)
+		}
+
+		sock := f.Name()
+		l, err := net.Listen("unix", sock)
+		if err != nil {
+			return fmt.Errorf("failed to start listening: %w", err)
+		}
+
+		func() {
+			a.mu.Lock()
+			defer a.mu.Unlock()
+			a.socket = sock
+			a.close = l.Close
+		}()
+
+		for {
+			c, err := l.Accept()
+			if err != nil {
+				if errors.Is(err, net.ErrClosed) {
+					return nil
+				}
+				return fmt.Errorf("could not accept request: %w", err)
 			}
-			return fmt.Errorf("could not accept request: %w", err)
+			if err := agent.ServeAgent(a, c); err != nil && err != io.EOF {
+				return fmt.Errorf("could not serve request: %w", err)
+			}
 		}
-		if err := agent.ServeAgent(a, c); err != nil && err != io.EOF {
-			return fmt.Errorf("could not serve request: %w", err)
-		}
-	}
+	})
 }
 
 // Close the agent and cleanup.
 func (a *Agent) Close() error {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	if a.close == nil {
+		return nil
+	}
 	return a.close()
 }
 
 // Socket returns the unix socket address in which the agent is listening.
 func (a *Agent) Socket() string {
+	a.mu.Lock()
+	defer a.mu.Unlock()
 	return a.socket
 }
 
 // Ready tells whether the agent is ready or not.
 func (a *Agent) Ready() bool {
+	a.mu.Lock()
+	defer a.mu.Unlock()
 	return a.socket != ""
 }
 

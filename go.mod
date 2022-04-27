@@ -3,6 +3,7 @@ module github.com/caarlos0/go-sshagent
 go 1.18
 
 require (
+	github.com/caarlos0/sync v0.0.1
 	github.com/charmbracelet/keygen v0.3.0
 	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4
 )
