@@ -114,17 +114,17 @@ func (a *Agent) Signers() ([]ssh.Signer, error) {
 	return a.signers, nil
 }
 
-// ErrNotImplemented is returned on operations that are not implemented.
-type ErrNotImplemented struct {
+// ErrUnsupportedOperation is returned on operations that are not implemented.
+type ErrUnsupportedOperation struct {
 	Op string
 }
 
-func (e ErrNotImplemented) Error() string {
-	return fmt.Sprintf("operation not implemented: %s", e.Op)
+func (e ErrUnsupportedOperation) Error() string {
+	return fmt.Sprintf("operation not supported: %s", e.Op)
 }
 
-func (a *Agent) Add(key agent.AddedKey) error   { return ErrNotImplemented{"Add"} }
-func (a *Agent) Remove(key ssh.PublicKey) error { return ErrNotImplemented{"Remove"} }
-func (a *Agent) RemoveAll() error               { return ErrNotImplemented{"RemoveAll"} }
-func (a *Agent) Lock(passphrase []byte) error   { return ErrNotImplemented{"Lock"} }
-func (a *Agent) Unlock(passphrase []byte) error { return ErrNotImplemented{"Unlock"} }
+func (a *Agent) Add(key agent.AddedKey) error   { return ErrUnsupportedOperation{"Add"} }
+func (a *Agent) Remove(key ssh.PublicKey) error { return ErrUnsupportedOperation{"Remove"} }
+func (a *Agent) RemoveAll() error               { return ErrUnsupportedOperation{"RemoveAll"} }
+func (a *Agent) Lock(passphrase []byte) error   { return ErrUnsupportedOperation{"Lock"} }
+func (a *Agent) Unlock(passphrase []byte) error { return ErrUnsupportedOperation{"Unlock"} }
