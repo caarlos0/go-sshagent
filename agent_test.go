@@ -102,15 +102,11 @@ func TestUnsupportedOps(t *testing.T) {
 
 func makeSigner(tb testing.TB) ssh.Signer {
 	tb.Helper()
-	k, err := keygen.New(filepath.Join(tb.TempDir(), "key"), nil, keygen.Ed25519)
+	k, err := keygen.New(filepath.Join(tb.TempDir(), "key_ed25519"), keygen.WithKeyType(keygen.Ed25519))
 	if err != nil {
 		tb.Fatal(err)
 	}
-	s, err := ssh.ParsePrivateKey(k.PrivateKeyPEM())
-	if err != nil {
-		tb.Fatal(err)
-	}
-	return s
+	return k.Signer()
 }
 
 func setupAgetnt(tb testing.TB, signers ...ssh.Signer) *sshagent.Agent {
