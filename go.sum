@@ -2,8 +2,8 @@ github.com/caarlos0/sshmarshal v0.1.0 h1:zTCZrDORFfWh526Tsb7vCm3+Yg/SfW/Ub8aQDeo
 github.com/caarlos0/sshmarshal v0.1.0/go.mod h1:7Pd/0mmq9x/JCzKauogNjSQEhivBclCQHfr9dlpDIyA=
 github.com/caarlos0/sync v0.0.1 h1:RJSYzxc2d9dym9ftc2V4Z5KcCBwqxyjLRiNGHno/0rY=
 github.com/caarlos0/sync v0.0.1/go.mod h1:l0MiCF/ShK8f4ltZq6mZ1ynVl6QCL509vJkqqj5PyRA=
-github.com/charmbracelet/keygen v0.4.2 h1:TNHua2MlXc6W1dQB2iW4msSZGKlb8RtxtmYDWUs4iRw=
-github.com/charmbracelet/keygen v0.4.2/go.mod h1:4e4FT3HSdLU/u83RfJWvzJIaVb8aX4MxtDlfXwpDJaI=
+github.com/charmbracelet/keygen v0.4.3 h1:ywOZRwkDlpmkawl0BgLTxaYWDSqp6Y4nfVVmgyyO1Mg=
+github.com/charmbracelet/keygen v0.4.3/go.mod h1:4e4FT3HSdLU/u83RfJWvzJIaVb8aX4MxtDlfXwpDJaI=
 golang.org/x/crypto v0.10.0 h1:LKqV2xt9+kDzSTfOhx4FrkEBcMrAgHSYgzywV9zcGmM=
 golang.org/x/crypto v0.10.0/go.mod h1:o4eNf7Ede1fv+hwOwZsTHl9EsPFO6q6ZvYR8vYfY45I=
 golang.org/x/sys v0.9.0 h1:KS/R3tvhPqvJvwcKfnBHJwwthS11LRhmM5D59eEXa0s=
