@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/caarlos0/sync v0.0.1
 	github.com/charmbracelet/keygen v0.5.1
-	golang.org/x/crypto v0.27.0
+	golang.org/x/crypto v0.28.0
 )
 
-require golang.org/x/sys v0.25.0 // indirect
+require golang.org/x/sys v0.26.0 // indirect
