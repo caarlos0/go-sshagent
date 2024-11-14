@@ -1,5 +1,5 @@
-github.com/caarlos0/sync v0.0.1 h1:RJSYzxc2d9dym9ftc2V4Z5KcCBwqxyjLRiNGHno/0rY=
-github.com/caarlos0/sync v0.0.1/go.mod h1:l0MiCF/ShK8f4ltZq6mZ1ynVl6QCL509vJkqqj5PyRA=
+github.com/caarlos0/sync v0.0.2 h1:QtFo9aTmFTKI6F0l4S9JFJ6TAtJAuZpr/1w/dPTp7Bo=
+github.com/caarlos0/sync v0.0.2/go.mod h1:l0MiCF/ShK8f4ltZq6mZ1ynVl6QCL509vJkqqj5PyRA=
 github.com/charmbracelet/keygen v0.5.1 h1:zBkkYPtmKDVTw+cwUyY6ZwGDhRxXkEp0Oxs9sqMLqxI=
 github.com/charmbracelet/keygen v0.5.1/go.mod h1:zznJVmK/GWB6dAtjluqn2qsttiCBhA5MZSiwb80fcHw=
 golang.org/x/crypto v0.29.0 h1:L5SG1JTTXupVV3n6sUqMTeWbjAyfPwoda2DLX8J8FrQ=
