@@ -1,6 +1,6 @@
 module github.com/caarlos0/go-sshagent
 
-go 1.18
+go 1.23.0
 
 require (
 	github.com/caarlos0/sync v0.0.2
